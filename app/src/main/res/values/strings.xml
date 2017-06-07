@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Keddit</string>
     <string name="actionAdd">Add</string>
+    <string name="add_new_topic_title">Create a new topic</string>
+    <string name="add_new_topic_description">Please enter the title of the topic</string>
 </resources>
