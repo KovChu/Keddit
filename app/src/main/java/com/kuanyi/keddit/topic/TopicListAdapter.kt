@@ -112,27 +112,13 @@ class TopicListAdapter : RecyclerView.Adapter<TopicListAdapter.TopicHolder>(){
 
             itemView.itemUpvoteBtn.setOnClickListener {
                 topicItem.upVote()
-                itemView.itemUpvoteCountTxt.text = topicItem.upVoteCount.toString()
-                val currentPosition = topicItemList.indexOf(topicItem)
-                val newPosition = checkTopicPosition(topicItem.upVoteCount)
-                if(newPosition != currentPosition) {
-                    notifyItemMoved(currentPosition, newPosition)
-                }else {
-                    notifyItemChanged(currentPosition)
-                }
+                notifyItemChanged(topicItemList.indexOf(topicItem))
 
             }
 
             itemView.itemDownvoteBtn.setOnClickListener {
                 topicItem.downVote()
-                itemView.itemUpvoteCountTxt.text = topicItem.upVoteCount.toString()
-                val currentPosition = topicItemList.indexOf(topicItem)
-                val newPosition = checkTopicPosition(topicItem.upVoteCount)
-                if(newPosition != currentPosition) {
-                    notifyItemMoved(currentPosition, newPosition)
-                }else {
-                    notifyItemChanged(currentPosition)
-                }
+                notifyItemChanged(topicItemList.indexOf(topicItem))
 
             }
         }

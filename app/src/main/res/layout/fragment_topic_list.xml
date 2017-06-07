@@ -8,6 +8,7 @@
         android:id="@+id/listRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"/>
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"/>
 
 </RelativeLayout>
