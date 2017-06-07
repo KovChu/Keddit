@@ -1,4 +1,5 @@
-#Keddit
+Keddit
+======
 
 This is a Reddit-like app that allows user to create topics and perform upvote and downvote actions.
   

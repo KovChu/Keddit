@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:id="@+id/itemUpVoteLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/itemUpvoteBtn"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:layout_gravity="bottom"
+            android:src="@drawable/btn_upvote"
+            android:background="@drawable/btn_bkg_selector"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/itemUpvoteCountTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:layout_gravity="center"/>
+
+        <ImageButton
+            android:id="@+id/itemDownvoteBtn"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/btn_downvote"
+            android:background="@drawable/btn_bkg_selector"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="top"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/itemTopicText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxEms="255"
+        android:layout_toRightOf="@id/itemUpVoteLayout"
+        android:layout_marginLeft="8dp"
+        android:textSize="20sp"
+        android:text="doakdpasjdasdjasdaosderrwe9ruwe0ruw09ruw09ruw09ruw09wur90wure09wruw09w0ruw0rwjasoidjasoidjaiofhsdiofhdsiofsdfiosdoakdpasjdasdjasdaosderrwe9ruwe0ruw09ruw09ruw09ruw09wur90wure09wruw09w0ruw0rwjasoidjasoidjaiofhsdiofhdsiofsdfios210310-39210-39120-3910-239-102"/>
+
+
+</RelativeLayout>
