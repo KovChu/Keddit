@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.kuanyi.keddit.R
 import com.kuanyi.keddit.model.Topic
 import kotlinx.android.synthetic.main.list_topic_item.view.*
+import java.util.*
 
 /**
  * The RecyclerView Adapter class that binds the data with the view and
@@ -17,8 +18,12 @@ class TopicListAdapter : RecyclerView.Adapter<TopicListAdapter.TopicHolder>(){
 
     var topicItemList = mutableListOf<Topic>()
 
+    /**
+     * adding a single topic to the list
+     * the topic will be added to the index by checking each item's upVoteCount in the list
+     */
     fun addTopic(topic : Topic) {
-        val position = checkTopicPosition(topic.upVoteCount)
+        val position = checkTopicPosition(topic)
         topicItemList.add(position, topic)
         notifyItemInserted(position)
     }
@@ -90,18 +95,24 @@ class TopicListAdapter : RecyclerView.Adapter<TopicListAdapter.TopicHolder>(){
     }
 
 
-    fun checkTopicPosition(upVoteCount : Int): Int {
+    /**
+     * check for the position to add the Topic,
+     * it should always be the position that is before the item that has
+     * same or less upVoteCount
+     */
+    fun checkTopicPosition(item : Topic): Int {
         //when initialize, mark the item to the end of the list
-        var newPosition = topicItemList.size
-        for (item: Topic in topicItemList) {
-            if (item.upVoteCount <= upVoteCount) {
-                // if there is an item that has the less upVote count,
-                // the original item will move up to that item's position
-                newPosition = topicItemList.indexOf(item)
+        var newPosition = topicItemList.size - 1
+        for (itemInList: Topic in topicItemList) {
+            if (item != itemInList &&
+                    itemInList.upVoteCount <= item.upVoteCount) {
+                // if there is an item that has the less or equal upVote count,
+                // the original item will move up to this item's position
+                newPosition = topicItemList.indexOf(itemInList)
                 break
             }
         }
-        return newPosition
+        return if(newPosition == -1) 0 else newPosition
     }
 
     inner class TopicHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -112,15 +123,21 @@ class TopicListAdapter : RecyclerView.Adapter<TopicListAdapter.TopicHolder>(){
 
             itemView.itemUpvoteBtn.setOnClickListener {
                 topicItem.upVote()
-                notifyItemChanged(topicItemList.indexOf(topicItem))
-
+                checkForPositionChange(topicItem)
             }
 
             itemView.itemDownvoteBtn.setOnClickListener {
                 topicItem.downVote()
-                notifyItemChanged(topicItemList.indexOf(topicItem))
+                checkForPositionChange(topicItem)
 
             }
+        }
+        fun checkForPositionChange(topicItem : Topic) {
+            itemView.itemUpvoteCountTxt.text = topicItem.upVoteCount.toString()
+            //sort and display the list by order
+            Collections.sort(topicItemList)
+            notifyDataSetChanged()
+
         }
     }
 }

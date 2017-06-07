@@ -50,7 +50,9 @@
             android:layout_height="wrap_content"
             android:maxEms="255"
             android:layout_toRightOf="@id/itemUpVoteLayout"
+            android:layout_toEndOf="@id/itemUpVoteLayout"
             android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:textSize="20sp"/>
 
     </RelativeLayout>

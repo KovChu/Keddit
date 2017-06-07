@@ -44,6 +44,16 @@ class TopicListFragment : Fragment() {
         listRecyclerView.adapter = topicListAdapter
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_add -> {
+                onAddClicked()
+                return true
+            }
+        }
+        return false
+    }
+
     fun onAddClicked() {
         //create an alert dialog for user to input the text for the item
         val alertDialog = AlertDialog.Builder(activity)
@@ -87,14 +97,4 @@ class TopicListFragment : Fragment() {
         })
     }
 
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_add -> {
-                onAddClicked()
-                return true
-            }
-        }
-        return false
-    }
 }

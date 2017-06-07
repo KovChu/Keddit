@@ -6,7 +6,10 @@ import android.view.Menu
 import com.kuanyi.keddit.topic.TopicListFragment
 
 
-
+/**
+ * The main Activity for the app, it will add the TopicListFragment to view
+ * and setup the option menu
+ */
 class MainActivity : AppCompatActivity() {
 
     companion object {
