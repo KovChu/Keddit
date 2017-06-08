@@ -122,6 +122,7 @@ class TopicListAdapter : RecyclerView.Adapter<TopicListAdapter.TopicHolder>(){
         return if(newPosition == -1) 0 else newPosition
     }
 
+    //need to add inner to have access of outer class
     inner class TopicHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindTopic(topicItem : Topic) {
 
@@ -139,21 +140,21 @@ class TopicListAdapter : RecyclerView.Adapter<TopicListAdapter.TopicHolder>(){
 
             }
         }
-        fun checkForPositionChange(topicItem : Topic) {
+
+        //after user action, check if whether the item should move due to upvote change
+        private fun checkForPositionChange(topicItem : Topic) {
             itemView.itemUpvoteCountTxt.text = topicItem.upVoteCount.toString()
             val currentPosition = topicItemList.indexOf(topicItem)
+            // remove the item from the list first, this is done to ensure
+            // that it will not be move to the wrong position when it shouldn't move
             topicItemList.remove(topicItem)
             val newPosition = checkTopicPosition(topicItem)
+            // add the item back to the new position
             topicItemList.add(newPosition, topicItem)
-            if(newPosition == currentPosition) {
-                notifyItemChanged(newPosition)
-            }else {
+            // notify the adapter to animate the item to new position only when the position is different
+            if(newPosition != currentPosition) {
                 notifyItemMoved(currentPosition, newPosition)
             }
-            //sort and display the list by order
-//            Collections.sort(topicItemList)
-//            notifyDataSetChanged()
-
         }
     }
 }

@@ -25,8 +25,9 @@ import kotlinx.android.synthetic.main.fragment_topic_list.*
  * the list should remain sorted with the most up vote on top
  * Created by kuanyi on 2017/6/7.
  */
-class TopicListFragment : Fragment() {
+class TopicListFragment : Fragment(), TopicListViewInterface {
 
+    val topicListPresenter = TopicListPresenterImp(this)
     val topicListAdapter = TopicListAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -47,14 +48,18 @@ class TopicListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add -> {
-                onAddClicked()
+                topicListPresenter.onAddClicked()
                 return true
             }
         }
         return false
     }
 
-    fun onAddClicked() {
+    /**
+     * notify fragment to display a dialog for user to create a new Topic
+     */
+    override fun displayCreateDialog() {
+
         //create an alert dialog for user to input the text for the item
         val alertDialog = AlertDialog.Builder(activity)
         alertDialog.setTitle(getString(R.string.add_new_topic_title))
@@ -69,9 +74,7 @@ class TopicListFragment : Fragment() {
         alertDialog.setView(input)
 
         alertDialog.setPositiveButton(getString(R.string.actionAdd)) { dialogInterface, i ->
-            //create a new topic item and display
-            val topic = Topic(input.text.toString())
-            topicListAdapter.addTopic(topic)
+            topicListPresenter.onTopicCreate(input.text.toString())
         }
 
         val dialog = alertDialog.show()
@@ -95,6 +98,13 @@ class TopicListFragment : Fragment() {
 
             }
         })
+    }
+
+    /**
+     * notify that there is a new topic created and to be added to the list
+     */
+    override fun onNewTopic(newTopic: Topic) {
+        topicListAdapter.addTopic(newTopic)
     }
 
 }
