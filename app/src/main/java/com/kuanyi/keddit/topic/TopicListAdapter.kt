@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.kuanyi.keddit.R
 import com.kuanyi.keddit.model.Topic
 import kotlinx.android.synthetic.main.list_topic_item.view.*
-import java.util.*
 
 /**
  * The RecyclerView Adapter class that binds the data with the view and
@@ -112,6 +111,14 @@ class TopicListAdapter : RecyclerView.Adapter<TopicListAdapter.TopicHolder>(){
                 break
             }
         }
+        // due to we remove the item before checking, the newPosition will be off
+        // when the item has the lowest count, so we need to add a special check
+        // to move the item to its correct position
+        if(topicItemList.size > 0 &&
+                item.upVoteCount < topicItemList[topicItemList.size - 1].upVoteCount) {
+            newPosition = topicItemList.size
+        }
+        //the position will be -1 if the list is empty
         return if(newPosition == -1) 0 else newPosition
     }
 
@@ -134,9 +141,18 @@ class TopicListAdapter : RecyclerView.Adapter<TopicListAdapter.TopicHolder>(){
         }
         fun checkForPositionChange(topicItem : Topic) {
             itemView.itemUpvoteCountTxt.text = topicItem.upVoteCount.toString()
+            val currentPosition = topicItemList.indexOf(topicItem)
+            topicItemList.remove(topicItem)
+            val newPosition = checkTopicPosition(topicItem)
+            topicItemList.add(newPosition, topicItem)
+            if(newPosition == currentPosition) {
+                notifyItemChanged(newPosition)
+            }else {
+                notifyItemMoved(currentPosition, newPosition)
+            }
             //sort and display the list by order
-            Collections.sort(topicItemList)
-            notifyDataSetChanged()
+//            Collections.sort(topicItemList)
+//            notifyDataSetChanged()
 
         }
     }
